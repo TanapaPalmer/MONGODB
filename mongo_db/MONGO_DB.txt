@@ -1,0 +1,769 @@
+------------------------------------------------------------------------------------------------------------------------
+
+
+*****Get all students***** 
+: db.students.find()
+
+{
+        "_id" : ObjectId("648b4a33d796466f76d88fc1"),
+        "name" : "Taylor Smith",
+        "home_state" : "Oregon",
+        "lucky_number" : 0,
+        "birthday" : {
+                "month" : 8,
+                "day" : 8,
+                "year" : 1988
+        }
+}
+{
+        "_id" : ObjectId("648b4a8fd796466f76d88fc2"),
+        "name" : "Sarah Sams",
+        "home_state" : "Florida",
+        "lucky_number" : 14,
+        "birthday" : {
+                "month" : 2,
+                "day" : 14,
+                "year" : 1985
+        }
+}
+{
+        "_id" : ObjectId("648b4ae8d796466f76d88fc3"),
+        "name" : "Timmy Lee",
+        "home_state" : "California",
+        "lucky_number" : 99,
+        "birthday" : {
+                "month" : 12,
+                "day" : 31,
+                "year" : 1999
+        }
+}
+{
+        "_id" : ObjectId("648b4b21d796466f76d88fc4"),
+        "name" : "Gina Kim",
+        "home_state" : "Washington",
+        "lucky_number" : 4,
+        "birthday" : {
+                "month" : 5,
+                "day" : 17,
+                "year" : 2000
+        }
+}
+{
+        "_id" : ObjectId("648b4b79d796466f76d88fc5"),
+        "name" : "Barbara Hook",
+        "home_state" : "North Carolina",
+        "lucky_number" : 45,
+        "birthday" : {
+                "month" : 10,
+                "day" : 5,
+                "year" : 2002
+        }
+}
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+*****Retrieve all students who are from California (San Jose Dojo) or Washington (Seattle Dojo)*****
+: db.students.find({$or:[{home_state:"California"}, {home_state:"Washington"}]}).pretty()
+
+{
+        "_id" : ObjectId("648b4ae8d796466f76d88fc3"),
+        "name" : "Timmy Lee",
+        "home_state" : "California",
+        "lucky_number" : 99,
+        "birthday" : {
+                "month" : 12,
+                "day" : 31,
+                "year" : 1999
+        }
+}
+{
+        "_id" : ObjectId("648b4b21d796466f76d88fc4"),
+        "name" : "Gina Kim",
+        "home_state" : "Washington",
+        "lucky_number" : 4,
+        "birthday" : {
+                "month" : 5,
+                "day" : 17,
+                "year" : 2000
+        }
+}
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+*****Get all students whose lucky number is greater than 3*****
+: db.students.find({lucky_number:{$gt:3}})
+
+{
+        "_id" : ObjectId("648b4a8fd796466f76d88fc2"),
+        "name" : "Sarah Sams",
+        "home_state" : "Florida",
+        "lucky_number" : 14,
+        "birthday" : {
+                "month" : 2,
+                "day" : 14,
+                "year" : 1985
+        }
+}
+{
+        "_id" : ObjectId("648b4ae8d796466f76d88fc3"),
+        "name" : "Timmy Lee",
+        "home_state" : "California",
+        "lucky_number" : 99,
+        "birthday" : {
+                "month" : 12,
+                "day" : 31,
+                "year" : 1999
+        }
+}
+{
+        "_id" : ObjectId("648b4b21d796466f76d88fc4"),
+        "name" : "Gina Kim",
+        "home_state" : "Washington",
+        "lucky_number" : 4,
+        "birthday" : {
+                "month" : 5,
+                "day" : 17,
+                "year" : 2000
+        }
+}
+{
+        "_id" : ObjectId("648b4b79d796466f76d88fc5"),
+        "name" : "Barbara Hook",
+        "home_state" : "North Carolina",
+        "lucky_number" : 45,
+        "birthday" : {
+                "month" : 10,
+                "day" : 5,
+                "year" : 2002
+        }
+}
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+*****Get all students whose lucky number is less than or equal to 10*****
+: db.students.find({lucky_number:{$lte:10}}).pretty()
+
+{
+        "_id" : ObjectId("648b4a33d796466f76d88fc1"),
+        "name" : "Taylor Smith",
+        "home_state" : "Oregon",
+        "lucky_number" : 0,
+        "birthday" : {
+                "month" : 8,
+                "day" : 8,
+                "year" : 1988
+        }
+}
+{
+        "_id" : ObjectId("648b4b21d796466f76d88fc4"),
+        "name" : "Gina Kim",
+        "home_state" : "Washington",
+        "lucky_number" : 4,
+        "birthday" : {
+                "month" : 5,
+                "day" : 17,
+                "year" : 2000
+        }
+}
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+*****Get all students whose lucky number is between 1 and 9 (inclusive)*****
+: db.students.find({lucky_number:{$gte:1,$lte:9}}).pretty()
+
+{
+        "_id" : ObjectId("648b4b21d796466f76d88fc4"),
+        "name" : "Gina Kim",
+        "home_state" : "Washington",
+        "lucky_number" : 4,
+        "birthday" : {
+                "month" : 5,
+                "day" : 17,
+                "year" : 2000
+        }
+}
+
+------------------------------------------------------------------------------------------------------------------------
+
+*****Add a field named 'interests' to all student documents in the collection. The field should be an array and contain the following entries: 'coding', 'brunch', MongoDB'. Add this field to all documents using a single command*****
+: db.students.updateMany({}, {$set: {interests: ['coding', 'brunch', 'MongoDB']}})
+
+------------------------------------------------------------------
+{ "acknowledged" : true, "matchedCount" : 5, "modifiedCount" : 5 }
+------------------------------------------------------------------
+
+: db.students.find().pretty()
+
+{
+        "_id" : ObjectId("648b4a33d796466f76d88fc1"),
+        "name" : "Taylor Smith",
+        "home_state" : "Oregon",
+        "lucky_number" : 0,
+        "birthday" : {
+                "month" : 8,
+                "day" : 8,
+                "year" : 1988
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB"
+        ]
+}
+{
+        "_id" : ObjectId("648b4a8fd796466f76d88fc2"),
+        "name" : "Sarah Sams",
+        "home_state" : "Florida",
+        "lucky_number" : 14,
+        "birthday" : {
+                "month" : 2,
+                "day" : 14,
+                "year" : 1985
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB"
+        ]
+}
+{
+        "_id" : ObjectId("648b4ae8d796466f76d88fc3"),
+        "name" : "Timmy Lee",
+        "home_state" : "California",
+        "lucky_number" : 99,
+        "birthday" : {
+                "month" : 12,
+                "day" : 31,
+                "year" : 1999
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB"
+        ]
+}
+{
+        "_id" : ObjectId("648b4b21d796466f76d88fc4"),
+        "name" : "Gina Kim",
+        "home_state" : "Washington",
+        "lucky_number" : 4,
+        "birthday" : {
+                "month" : 5,
+                "day" : 17,
+                "year" : 2000
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB"
+        ]
+}
+{
+        "_id" : ObjectId("648b4b79d796466f76d88fc5"),
+        "name" : "Barbara Hook",
+        "home_state" : "North Carolina",
+        "lucky_number" : 45,
+        "birthday" : {
+                "month" : 10,
+                "day" : 5,
+                "year" : 2002
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB"
+        ]
+}
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+*****Add some unique interests for each particular student into each of their interest arrays*****
+: db.students.update({name:'Barbara Hook'}, {$push: {interests: 'Python'}})
+
+{
+        "_id" : ObjectId("648b4b79d796466f76d88fc5"),
+        "name" : "Barbara Hook",
+        "home_state" : "North Carolina",
+        "lucky_number" : 45,
+        "birthday" : {
+                "month" : 10,
+                "day" : 5,
+                "year" : 2002
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB",
+                "Python"
+        ]
+}
+
+------------------------------------------------------------------
+
+: db.students.update({name:'Gina Kim'}, {$push: {interests: 'Java'}})
+
+{
+        "_id" : ObjectId("648b4b21d796466f76d88fc4"),
+        "name" : "Gina Kim",
+        "home_state" : "Washington",
+        "lucky_number" : 4,
+        "birthday" : {
+                "month" : 5,
+                "day" : 17,
+                "year" : 2000
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB"
+		"Java"
+        ]
+}
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+*****Add the interest 'taxes' into someone's interest array*****
+: db.students.update({name:'Timmy Lee'}, {$push: {interests: 'Taxes'}})
+
+{
+        "_id" : ObjectId("648b4ae8d796466f76d88fc3"),
+        "name" : "Timmy Lee",
+        "home_state" : "California",
+        "lucky_number" : 99,
+        "birthday" : {
+                "month" : 12,
+                "day" : 31,
+                "year" : 1999
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB",
+                "Taxes"
+        ]
+}
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+*****Remove the 'taxes' interest you just added*****
+: db.students.update({name:'Timmy Lee'},{$pull:{interests:'Taxes'}})
+
+{
+        "_id" : ObjectId("648b4ae8d796466f76d88fc3"),
+        "name" : "Timmy Lee",
+        "home_state" : "California",
+        "lucky_number" : 99,
+        "birthday" : {
+                "month" : 12,
+                "day" : 31,
+                "year" : 1999
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB"
+        ]
+}
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+*****Remove all students who are from California*****
+: db.students.remove({home_state:'California'})
+
+{
+        "_id" : ObjectId("648b4a33d796466f76d88fc1"),
+        "name" : "Taylor Smith",
+        "home_state" : "Oregon",
+        "lucky_number" : 0,
+        "birthday" : {
+                "month" : 8,
+                "day" : 8,
+                "year" : 1988
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB"
+        ]
+}
+{
+        "_id" : ObjectId("648b4a8fd796466f76d88fc2"),
+        "name" : "Sarah Sams",
+        "home_state" : "Florida",
+        "lucky_number" : 14,
+        "birthday" : {
+                "month" : 2,
+                "day" : 14,
+                "year" : 1985
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB"
+        ]
+}
+{
+        "_id" : ObjectId("648b4b21d796466f76d88fc4"),
+        "name" : "Gina Kim",
+        "home_state" : "Washington",
+        "lucky_number" : 4,
+        "birthday" : {
+                "month" : 5,
+                "day" : 17,
+                "year" : 2000
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB",
+                "Java"
+        ]
+}
+{
+        "_id" : ObjectId("648b4b79d796466f76d88fc5"),
+        "name" : "Barbara Hook",
+        "home_state" : "North Carolina",
+        "lucky_number" : 45,
+        "birthday" : {
+                "month" : 10,
+                "day" : 5,
+                "year" : 2002
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB",
+                "Python"
+        ]
+}
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+*****Remove a student by name*****
+: db.students.remove({name:'Sarah Sams'})
+
+{
+        "_id" : ObjectId("648b4a33d796466f76d88fc1"),
+        "name" : "Taylor Smith",
+        "home_state" : "Oregon",
+        "lucky_number" : 0,
+        "birthday" : {
+                "month" : 8,
+                "day" : 8,
+                "year" : 1988
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB"
+        ]
+}
+{
+        "_id" : ObjectId("648b4b21d796466f76d88fc4"),
+        "name" : "Gina Kim",
+        "home_state" : "Washington",
+        "lucky_number" : 4,
+        "birthday" : {
+                "month" : 5,
+                "day" : 17,
+                "year" : 2000
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB",
+                "Java"
+        ]
+}
+{
+        "_id" : ObjectId("648b4b79d796466f76d88fc5"),
+        "name" : "Barbara Hook",
+        "home_state" : "North Carolina",
+        "lucky_number" : 45,
+        "birthday" : {
+                "month" : 10,
+                "day" : 5,
+                "year" : 2002
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB",
+                "Python"
+        ]
+}
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+*****Remove a student whose lucky number is greater than 5 (JUST ONE)*****
+: db.students.remove({lucky_number:{$gt:5}}, true)
+
+{
+        "_id" : ObjectId("648b4a33d796466f76d88fc1"),
+        "name" : "Taylor Smith",
+        "home_state" : "Oregon",
+        "lucky_number" : 0,
+        "birthday" : {
+                "month" : 8,
+                "day" : 8,
+                "year" : 1988
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB"
+        ]
+}
+{
+        "_id" : ObjectId("648b4b21d796466f76d88fc4"),
+        "name" : "Gina Kim",
+        "home_state" : "Washington",
+        "lucky_number" : 4,
+        "birthday" : {
+                "month" : 5,
+                "day" : 17,
+                "year" : 2000
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB",
+                "Java"
+        ]
+}
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+*****Add a field to each student document called 'number_of_belts' and set it to 0*****
+: db.students.updateMany({}, {$set: {number_of_belts: 0}})
+
+{
+        "_id" : ObjectId("648b4a33d796466f76d88fc1"),
+        "name" : "Taylor Smith",
+        "home_state" : "Oregon",
+        "lucky_number" : 0,
+        "birthday" : {
+                "month" : 8,
+                "day" : 8,
+                "year" : 1988
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB"
+        ],
+        "number_of_belts" : 0
+}
+{
+        "_id" : ObjectId("648b4b21d796466f76d88fc4"),
+        "name" : "Gina Kim",
+        "home_state" : "Washington",
+        "lucky_number" : 4,
+        "birthday" : {
+                "month" : 5,
+                "day" : 17,
+                "year" : 2000
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB",
+                "Java"
+        ],
+        "number_of_belts" : 0
+}
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+*****Increment this field by 1 for all students in Washington (Seattle Dojo)*****
+: db.students.updateMany({home_state:'Washington'},{$inc:{number_of_belts:1}})
+
+{
+        "_id" : ObjectId("648b4a33d796466f76d88fc1"),
+        "name" : "Taylor Smith",
+        "home_state" : "Oregon",
+        "lucky_number" : 0,
+        "birthday" : {
+                "month" : 8,
+                "day" : 8,
+                "year" : 1988
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB"
+        ],
+        "number_of_belts" : 0
+}
+{
+        "_id" : ObjectId("648b4b21d796466f76d88fc4"),
+        "name" : "Gina Kim",
+        "home_state" : "Washington",
+        "lucky_number" : 4,
+        "birthday" : {
+                "month" : 5,
+                "day" : 17,
+                "year" : 2000
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB",
+                "Java"
+        ],
+        "number_of_belts" : 1
+}
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+*****Rename the 'number_of_belts' field to 'belts_earned'*****
+: db.students.updateMany({}, {$rename: {'number_of_belts': 'belts_earned'}})
+
+{
+        "_id" : ObjectId("648b4a33d796466f76d88fc1"),
+        "name" : "Taylor Smith",
+        "home_state" : "Oregon",
+        "lucky_number" : 0,
+        "birthday" : {
+                "month" : 8,
+                "day" : 8,
+                "year" : 1988
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB"
+        ],
+        "belts_earned" : 0
+}
+{
+        "_id" : ObjectId("648b4b21d796466f76d88fc4"),
+        "name" : "Gina Kim",
+        "home_state" : "Washington",
+        "lucky_number" : 4,
+        "birthday" : {
+                "month" : 5,
+                "day" : 17,
+                "year" : 2000
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB",
+                "Java"
+        ],
+        "belts_earned" : 1
+}
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+*****Remove the 'lucky_number' field*****
+: db.students.updateMany({}, {$unset: {'lucky_number': ''}})
+
+{
+        "_id" : ObjectId("648b4a33d796466f76d88fc1"),
+        "name" : "Taylor Smith",
+        "home_state" : "Oregon",
+        "birthday" : {
+                "month" : 8,
+                "day" : 8,
+                "year" : 1988
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB"
+        ],
+        "belts_earned" : 0
+}
+{
+        "_id" : ObjectId("648b4b21d796466f76d88fc4"),
+        "name" : "Gina Kim",
+        "home_state" : "Washington",
+        "birthday" : {
+                "month" : 5,
+                "day" : 17,
+                "year" : 2000
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB",
+                "Java"
+        ],
+        "belts_earned" : 1
+}
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+*****Add a 'updated_on' field, and set the value as the current date*****
+: db.students.updateMany({}, {$set: {'updated_on':Date()}})
+
+{
+        "_id" : ObjectId("648b4a33d796466f76d88fc1"),
+        "name" : "Taylor Smith",
+        "home_state" : "Oregon",
+        "birthday" : {
+                "month" : 8,
+                "day" : 8,
+                "year" : 1988
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB"
+        ],
+        "belts_earned" : 0,
+        "updated_on" : "Thu Jun 15 2023 14:36:31 GMT-0400 (Eastern Daylight Time)"
+}
+{
+        "_id" : ObjectId("648b4b21d796466f76d88fc4"),
+        "name" : "Gina Kim",
+        "home_state" : "Washington",
+        "birthday" : {
+                "month" : 5,
+                "day" : 17,
+                "year" : 2000
+        },
+        "interests" : [
+                "coding",
+                "brunch",
+                "MongoDB",
+                "Java"
+        ],
+        "belts_earned" : 1,
+        "updated_on" : "Thu Jun 15 2023 14:36:31 GMT-0400 (Eastern Daylight Time)"
+}
+
+
+------------------------------------------------------------------------------------------------------------------------
